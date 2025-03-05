@@ -1,0 +1,342 @@
+/**
+ * TodoApp - Thème sombre personnalisé pour Bootstrap avec palette violette
+ * Conserve la structure Bootstrap mais avec des couleurs sombres
+ */
+
+/* Couleurs de base du thème */
+:root {
+    --bg-main: #0A0A0A;         /* Fond principal */
+    --bg-secondary: #180828;     /* Fond secondaire (violet très foncé) */
+    --bg-element: #301050;       /* Fond des éléments interactifs (violet foncé) */
+    --text-primary: #EAEAEA;     /* Texte principal */
+    --text-secondary: #C9A9E9;   /* Texte secondaire (violet clair) */
+    --accent: #7828C8;           /* Couleur d'accent (violet vif) */
+    --accent-hover: #9353D3;     /* Couleur d'accent au survol (violet plus clair) */
+    --accent-light: #E4D4F4;     /* Violet très clair pour fonds légers */
+    --success: #10B981;          /* Succès */
+    --warning: #F59E0B;          /* Avertissement */
+    --danger: #EF4444;           /* Danger */
+    --border: #301050;           /* Bordures (violet foncé) */
+  }
+  
+  /* Styles globaux */
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+  }
+  
+  /* Remplacer les styles de base de Bootstrap */
+  .navbar-dark {
+    background-color: var(--bg-secondary) !important;
+  }
+  
+  .bg-primary {
+    background-color: var(--bg-secondary) !important;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .navbar-brand, .nav-link {
+    color: var(--text-primary) !important;
+  }
+  
+  .nav-link.active {
+    color: var(--accent-light) !important;
+    font-weight: 500;
+  }
+  
+  .nav-link:hover:not(.active) {
+    color: var(--accent-hover) !important;
+  }
+  
+  /* Conteneurs et cartes */
+  .container {
+    max-width: 1200px;
+  }
+  
+  .card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  
+  .card-header {
+    background-color: rgba(48, 16, 80, 0.4);
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .card-footer {
+    background-color: rgba(48, 16, 80, 0.4);
+    border-top: 1px solid var(--border);
+  }
+  
+  /* Tableaux */
+  .table {
+    color: var(--text-primary);
+  }
+  
+  .table thead th {
+    background-color: #180828;
+    color: var(--text-secondary);
+    border-color: var(--border);
+  }
+  
+  .table tbody tr {
+    border-color: var(--border);
+  }
+  
+  .table tbody tr:hover {
+    background-color: rgba(48, 16, 80, 0.3);
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(48, 16, 80, 0.2);
+  }
+  
+  /* Boutons */
+  .btn-primary {
+    background-color: var(--accent);
+    border-color: var(--accent);
+  }
+  
+  .btn-primary:hover, .btn-primary:focus {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    box-shadow: 0 0 0 0.25rem rgba(120, 40, 200, 0.25);
+  }
+  
+  .btn-outline-primary {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: var(--accent);
+    color: white;
+  }
+  
+  .btn-success {
+    background-color: var(--success);
+    border-color: var(--success);
+  }
+  
+  .btn-warning {
+    background-color: var(--warning);
+    border-color: var(--warning);
+  }
+  
+  .btn-danger {
+    background-color: var(--danger);
+    border-color: var(--danger);
+  }
+  
+  /* Formulaires */
+  .form-control, .form-select {
+    background-color: #180828;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+  
+  .form-control:focus, .form-select:focus {
+    background-color: #180828;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.25rem rgba(120, 40, 200, 0.25);
+    color: var(--text-primary);
+  }
+  
+  label {
+    color: var(--text-primary);
+  }
+  
+  /* Badges pour les statuts */
+  .badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+    border-radius: 30px;
+  }
+  
+  .badge.bg-primary {
+    background-color: var(--accent) !important;
+  }
+  
+  .badge-success {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+  }
+  
+  .badge-warning {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+  }
+  
+  /* Footer */
+  .bg-light {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+  }
+  
+  .text-muted {
+    color: var(--text-secondary) !important;
+  }
+  
+  /* Spécificités pour les alertes */
+  .alert {
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+  
+  .alert-success {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  
+  .alert-warning {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+  
+  .alert-danger {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+  
+  /* Liens */
+  a {
+    color: var(--accent-light);
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: var(--accent-hover);
+  }
+  
+  /* Scrollbar personnalisée */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--bg-main);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--bg-element);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
+  
+  /* Mise en forme des boutons d'action dans les tableaux */
+  .btn-action {
+    padding: 0.25rem 0.5rem;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .btn-action-view {
+    background-color: rgba(48, 16, 80, 0.3);
+    color: var(--text-secondary);
+  }
+  
+  .btn-action-view:hover {
+    background-color: rgba(48, 16, 80, 0.5);
+    color: var(--text-primary);
+  }
+  
+  .btn-action-edit {
+    background-color: rgba(120, 40, 200, 0.2);
+    color: var(--accent-light);
+  }
+  
+  .btn-action-edit:hover {
+    background-color: rgba(120, 40, 200, 0.4);
+    color: var(--accent-hover);
+  }
+  
+  .btn-action-toggle-complete {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+  }
+  
+  .btn-action-toggle-complete:hover {
+    background-color: rgba(16, 185, 129, 0.4);
+  }
+  
+  .btn-action-toggle-pending {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+  }
+  
+  .btn-action-toggle-pending:hover {
+    background-color: rgba(245, 158, 11, 0.4);
+  }
+  
+  .btn-action-delete {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+  }
+  
+  .btn-action-delete:hover {
+    background-color: rgba(239, 68, 68, 0.4);
+  }
+  
+  /* Style spécifique pour les pilules de navigation */
+  .nav-pills .nav-link.active {
+    background-color: var(--accent);
+    color: white !important;
+  }
+  
+  .nav-pills .nav-link:not(.active) {
+    color: var(--text-primary) !important;
+  }
+  
+  .nav-pills .nav-link:not(.active):hover {
+    background-color: rgba(120, 40, 200, 0.1);
+  }
+  
+  /* Correction pour les boutons dans les formulaires */
+  .btn-action button {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Style pour le message "Aucune tâche" */
+  .text-muted i.fa-tasks {
+    color: var(--accent-light) !important;
+    opacity: 0.5;
+  }
+  
+  /* Styles supplémentaires pour les formulaires */
+  textarea.form-control {
+    min-height: 120px;
+  }
+  
+  /* Amélioration visuelle des contrastes */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--accent-light);
+  }
+  
+  .table td {
+    padding: 0.75rem 1rem;
+  }
+
+  

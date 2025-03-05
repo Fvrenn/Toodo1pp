@@ -3,93 +3,73 @@
 {% block title %}Liste des tâches{% endblock %}
 
 {% block body %}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Liste des tâches</h1>
-        <a href="{{ path('app_task_new') }}" class="btn btn-success">
-            <i class="fas fa-plus me-1"></i> Nouvelle tâche
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-slate-100">Liste des tâches</h1>
+        <a href="{{ path('app_task_new') }}" class="inline-flex items-center px-4 py-2 bg-emerald-700 hover:bg-emerald-800 rounded-md text-white transition-colors">
+            <i class="fas fa-plus mr-2"></i> Nouvelle tâche
         </a>
     </div>
     
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="alert alert-{{ label }} alert-dismissible fade show">
+            <div class="mb-4 p-4 rounded-md border {% if label == 'success' %}bg-emerald-950 border-emerald-700 text-emerald-300{% elseif label == 'danger' or label == 'error' %}bg-rose-950 border-rose-700 text-rose-300{% else %}bg-blue-950 border-blue-700 text-blue-300{% endif %} relative">
                 {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="close-alert absolute top-4 right-4 text-slate-400 hover:text-slate-300" aria-label="Fermer">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
         {% endfor %}
     {% endfor %}
 
-    <div class="card mb-4">
-        <div class="card-header bg-light">
-            <div class="btn-group" role="group">
-                <a href="{{ path('app_task_index', {'filter': 'all'}) }}" class="btn btn-{{ app.request.query.get('filter', 'all') == 'all' ? 'primary' : 'outline-primary' }}">
-                    <i class="fas fa-list me-1"></i> Toutes
-                </a>
-                <a href="{{ path('app_task_index', {'filter': 'completed'}) }}" class="btn btn-{{ app.request.query.get('filter') == 'completed' ? 'primary' : 'outline-primary' }}">
-                    <i class="fas fa-check-circle me-1"></i> Terminées
-                </a>
-                <a href="{{ path('app_task_index', {'filter': 'pending'}) }}" class="btn btn-{{ app.request.query.get('filter') == 'pending' ? 'primary' : 'outline-primary' }}">
-                    <i class="fas fa-clock me-1"></i> En cours
-                </a>
+    <div class="bg-slate-900 rounded-lg shadow-md border border-slate-800 mb-6">
+        <div class="p-4 border-b border-slate-800">
+            <div class="flex flex-wrap gap-2">
+                <!-- Boutons de filtrage ici -->
             </div>
         </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>ID</th>
-                            <th>Titre</th>
-                            <th>Description</th>
-                            <th>Statut</th>
-                            <th>Date de création</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-slate-800 text-left">
+                    <tr>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-400 uppercase tracking-wider">Titre</th>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-400 uppercase tracking-wider">Créée le</th>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-400 uppercase tracking-wider">Statut</th>
+                        <th class="px-6 py-3 text-xs font-medium text-slate-400 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800">
                     {% for task in tasks %}
-                        <tr>
-                            <td>{{ task.id }}</td>
-                            <td>{{ task.title }}</td>
-<td>{{ task.description|striptags|length > 50 ? task.description|striptags|slice(0, 50) ~ '...' : task.description|striptags }}</td>                            <td>
-                                <span class="badge bg-{{ task.status ? 'success' : 'warning' }}">
+                        <tr class="hover:bg-slate-800/50">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm font-medium text-slate-200">{{ task.title }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-slate-400">{{ task.createdAt ? task.createdAt|date('d/m/Y à H:i') : '' }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex px-2 py-1 text-xs font-medium rounded-full {% if task.status %}bg-emerald-900 text-emerald-300{% else %}bg-amber-900 text-amber-300{% endif %}">
                                     {{ task.status ? 'Terminée' : 'En cours' }}
                                 </span>
                             </td>
-                            <td>{{ task.createdAt ? task.createdAt|date('d/m/Y H:i') : '' }}</td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-sm btn-info">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
+                                <div class="flex space-x-2">
+                                    <a href="{{ path('app_task_show', {'id': task.id}) }}" class="text-blue-400 hover:text-blue-300">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="text-amber-400 hover:text-amber-300">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ path('app_task_toggle', {'id': task.id}) }}" class="btn btn-sm btn-{{ task.status ? 'warning' : 'success' }}">
-                                        <i class="fas fa-{{ task.status ? 'undo' : 'check' }}"></i>
-                                    </a>
-                                    <form method="post" action="{{ path('app_task_delete', {'id': task.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche?');" style="display: inline-block;">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
                                 </div>
                             </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="6" class="text-center py-4">
-                                <div class="alert alert-info mb-0">Aucune tâche trouvée</div>
-                            </td>
+                            <td colspan="4" class="px-6 py-4 text-center text-slate-400 italic">Aucune tâche trouvée</td>
                         </tr>
                     {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="card-footer text-muted">
-            <small>Total : {{ tasks|length }} tâche(s)</small>
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}
