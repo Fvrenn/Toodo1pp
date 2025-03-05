@@ -21,7 +21,7 @@ Créez la base de données et exécutez les migrations :
 ### Utilisation
 Pour démarrer l'application en environnement de développement, exécutez la commande suivante :
 ```bash
-npm start
+symfony server:start
 ```
 
 Accédez à l'application via : [http://localhost:8000/task/](http://localhost:8000/task/)
