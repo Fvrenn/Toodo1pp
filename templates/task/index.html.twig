@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tâches{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Liste des tâches</h1>
+        <a href="{{ path('app_task_new') }}" class="btn btn-success">
+            <i class="fas fa-plus me-1"></i> Nouvelle tâche
+        </a>
+    </div>
+    
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <div class="btn-group" role="group">
+                <a href="{{ path('app_task_index', {'filter': 'all'}) }}" class="btn btn-{{ app.request.query.get('filter', 'all') == 'all' ? 'primary' : 'outline-primary' }}">
+                    <i class="fas fa-list me-1"></i> Toutes
+                </a>
+                <a href="{{ path('app_task_index', {'filter': 'completed'}) }}" class="btn btn-{{ app.request.query.get('filter') == 'completed' ? 'primary' : 'outline-primary' }}">
+                    <i class="fas fa-check-circle me-1"></i> Terminées
+                </a>
+                <a href="{{ path('app_task_index', {'filter': 'pending'}) }}" class="btn btn-{{ app.request.query.get('filter') == 'pending' ? 'primary' : 'outline-primary' }}">
+                    <i class="fas fa-clock me-1"></i> En cours
+                </a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Statut</th>
+                            <th>Date de création</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.id }}</td>
+                            <td>{{ task.title }}</td>
+<td>{{ task.description|striptags|length > 50 ? task.description|striptags|slice(0, 50) ~ '...' : task.description|striptags }}</td>                            <td>
+                                <span class="badge bg-{{ task.status ? 'success' : 'warning' }}">
+                                    {{ task.status ? 'Terminée' : 'En cours' }}
+                                </span>
+                            </td>
+                            <td>{{ task.createdAt ? task.createdAt|date('d/m/Y H:i') : '' }}</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="{{ path('app_task_show', {'id': task.id}) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ path('app_task_edit', {'id': task.id}) }}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{{ path('app_task_toggle', {'id': task.id}) }}" class="btn btn-sm btn-{{ task.status ? 'warning' : 'success' }}">
+                                        <i class="fas fa-{{ task.status ? 'undo' : 'check' }}"></i>
+                                    </a>
+                                    <form method="post" action="{{ path('app_task_delete', {'id': task.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche?');" style="display: inline-block;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ task.id) }}">
+                                        <button class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">
+                                <div class="alert alert-info mb-0">Aucune tâche trouvée</div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <small>Total : {{ tasks|length }} tâche(s)</small>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="mb-3">
+        {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.title, {'attr': {'class': 'invalid-feedback'}}) }}
+        <div class="form-text">Donnez un titre clair et concis à votre tâche</div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+        {{ form_errors(form.description, {'attr': {'class': 'invalid-feedback'}}) }}
+    </div>
+
+    <div class="mb-3 form-check">
+        {{ form_widget(form.status, {'attr': {'class': 'form-check-input'}}) }}
+        {{ form_label(form.status, null, {'label_attr': {'class': 'form-check-label'}}) }}
+    </div>
+
+    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
