@@ -8,7 +8,7 @@ TodoApp est une application simple de gestion de tâches qui permet aux utilisat
 ### Installation
 Pour installer l'application, clonez le dépôt et installez les dépendances :
 ```bash
-git clone https://github.com/votre-utilisateur/TodoApp.git
+git clone https://github.com/Fvrenn/Toodo1pp.git
 cd TodoApp
 npm install
 ```
